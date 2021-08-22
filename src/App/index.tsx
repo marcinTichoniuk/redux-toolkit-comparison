@@ -6,7 +6,14 @@ import React, {
   useState,
 } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Todo, State } from "../type";
+import {
+  createTodoActionCreator,
+  editTodoActionCreator,
+  toggleTodoActionCreator,
+  deleteTodoActionCreator,
+} from "../redux-old-way/TodoState";
+import { selectTodoActionCreator } from "../redux-old-way/SelectTodoState";
+import { State } from "../type";
 import "./App.css";
 
 const App = function() {
@@ -34,9 +41,16 @@ const App = function() {
 
   const handleCreateNewTodo = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    if (newTodoInput) {
+      dispatch(createTodoActionCreator({ desc: newTodoInput }));
+      setNewTodoInput("");
+    }
   };
 
-  const handleSelectTodo = (todoId: string) => (): void => {};
+  // const handleSelectTodo = (todoId: string) => (): void => {};
+  const handleSelectTodo = (todoId: string) => {
+    dispatch(selectTodoActionCreator({ id: todoId }));
+  };
 
   const handleEdit = (): void => {
     if (!selectedTodo) return;
@@ -53,22 +67,34 @@ const App = function() {
 
   const handleUpdate = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    if (editTodoInput && selectedTodoId) {
+      dispatch(
+        editTodoActionCreator({ id: selectedTodoId, desc: editTodoInput })
+      );
+      handleCancelUpdate();
+    } else {
+      alert("Error!");
+    }
   };
 
   const handleCancelUpdate = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    e?: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {
-    e.preventDefault();
+    e?.preventDefault();
     setIsEditMode(false);
     setEditTodoInput("");
   };
 
   const handleToggle = (): void => {
     if (!selectedTodoId || !selectedTodo) return;
+
+    dispatch(toggleTodoActionCreator({ id: selectedTodoId }));
   };
 
   const handleDelete = (): void => {
     if (!selectedTodoId) return;
+
+    dispatch(deleteTodoActionCreator({ id: selectedTodoId }));
   };
 
   return (
@@ -95,7 +121,7 @@ const App = function() {
                 todo.id === selectedTodoId ? "active" : ""
               }`}
               key={todo.id}
-              onClick={handleSelectTodo(todo.id)}
+              onClick={() => handleSelectTodo(todo.id)}
             >
               <span className="list-number">{i + 1})</span> {todo.desc}
             </li>

@@ -11,7 +11,7 @@ const DELETE_TODO = "DELETE_TODO";
 export type ActionType =
   | { type: typeof CREATE_TODO; payload: Todo }
   | { type: typeof EDIT_TODO; payload: { id: string; desc: string } }
-  | { type: typeof TOGGLE_TODO; payload: { id: string; isComplete: boolean } }
+  | { type: typeof TOGGLE_TODO; payload: { id: string } }
   | { type: typeof DELETE_TODO; payload: { id: string } };
 
 // action creators
@@ -34,11 +34,9 @@ export const editTodoActionCreator = ({
 
 export const toggleTodoActionCreator = ({
   id,
-  isComplete,
 }: {
   id: string;
-  isComplete: boolean;
-}): ActionType => ({ type: TOGGLE_TODO, payload: { id, isComplete } });
+}): ActionType => ({ type: TOGGLE_TODO, payload: { id } });
 
 export const deleteTodoActionCreator = ({
   id,
@@ -81,7 +79,7 @@ export const todosReducer = (
     case TOGGLE_TODO:
       return state.map((todo) =>
         todo.id === action.payload.id
-          ? { ...todo, isComplete: action.payload.isComplete }
+          ? { ...todo, isComplete: !todo.isComplete }
           : todo
       );
     case DELETE_TODO:
