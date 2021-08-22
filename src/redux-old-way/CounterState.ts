@@ -1,6 +1,6 @@
 import { ActionType } from "./TodoState";
 
-export const counterReducer = (state = 0, action: ActionType) => {
+export const counterReducer = (state = 0, action: ActionType): number => {
   switch (action.type) {
     case "CREATE_TODO":
       return state + 1;
