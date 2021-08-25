@@ -5,6 +5,7 @@ export const selectTodoSlice = createSlice({
   initialState: null as string | null,
   reducers: {
     select: (state, action: PayloadAction<{ id: string }>) => {
+      // state = action.payload.id  --> impossible (cannot mutate primitive values directly)
       return action.payload.id;
     },
   },
