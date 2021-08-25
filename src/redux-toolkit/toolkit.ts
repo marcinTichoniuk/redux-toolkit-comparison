@@ -25,6 +25,15 @@ const todosSlice = createSlice({
   name: "todos",
   initialState: todosInitialState,
   reducers: {
+    create: {
+      reducer: (state, action: PayloadAction<Todo>) => {
+        state.push(action.payload);
+        // return [...state, action.payload];
+      },
+      prepare: ({ desc }: { desc: string }) => ({
+        payload: { id: uuid(), desc, isComplete: false },
+      }),
+    },
     edit: (state, action: PayloadAction<{ id: string; desc: string }>) => {
       const todoToEdit = state.find((todo) => todo.id === action.payload.id);
       if (todoToEdit) {
