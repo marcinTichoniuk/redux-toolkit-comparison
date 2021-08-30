@@ -21,7 +21,7 @@ const todosInitialState: Todo[] = [
   },
 ];
 
-const todosSlice = createSlice({
+export const todosSlice = createSlice({
   name: "todos",
   initialState: todosInitialState,
   reducers: {
@@ -30,7 +30,7 @@ const todosSlice = createSlice({
         state.push(action.payload);
         // return [...state, action.payload];
       },
-      prepare: ({ desc }: { desc: string }) => ({
+      prepare: ({ desc }: { desc: string }): { payload: Todo } => ({
         payload: { id: uuid(), desc, isComplete: false },
       }),
     },
