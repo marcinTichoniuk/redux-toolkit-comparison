@@ -11,7 +11,6 @@ export const counterSlice = createSlice({
   //   [todosSlice.actions.toggle.type]: (state) => state + 1,
   //   [todosSlice.actions.remove.type]: (state) => state + 1,
   // },
-  // @TODO check if this works
   extraReducers: (builder) => {
     builder
       .addCase(todosSlice.actions.create, (state) => state + 1)
