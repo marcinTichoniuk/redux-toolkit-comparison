@@ -65,3 +65,10 @@ export const todosSlice = createSlice({
     },
   },
 });
+
+export const {
+  create: createTodoActionCreator,
+  edit: editTodoActionCreator,
+  toggle: toggleTodoActionCreator,
+  remove: deleteTodoActionCreator,
+} = todosSlice.actions;

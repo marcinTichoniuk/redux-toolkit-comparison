@@ -10,3 +10,5 @@ export const selectTodoSlice = createSlice({
     },
   },
 });
+
+export const { select: selectTodoActionCreator } = selectTodoSlice.actions;
