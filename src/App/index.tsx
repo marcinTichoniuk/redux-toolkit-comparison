@@ -5,8 +5,8 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { useSelector, useDispatch } from "react-redux";
 
+import { useAppDispatch, useAppSelector } from "../redux-toolkit/hooks";
 // import {
 //   createTodoActionCreator,
 //   editTodoActionCreator,
@@ -21,14 +21,13 @@ import {
   deleteTodoActionCreator,
 } from "../redux-toolkit/TodosSlice";
 import { selectTodoActionCreator } from "../redux-toolkit/SelectTodoSlice";
-import { State } from "../type";
 import "./App.css";
 
 const App = function() {
-  const dispatch = useDispatch();
-  const todos = useSelector((state: State) => state.todos);
-  const selectedTodoId = useSelector((state: State) => state.selectedTodo);
-  const editedCount = useSelector((state: State) => state.counter);
+  const dispatch = useAppDispatch();
+  const todos = useAppSelector((state) => state.todos);
+  const selectedTodoId = useAppSelector((state) => state.selectedTodo);
+  const editedCount = useAppSelector((state) => state.counter);
 
   const [newTodoInput, setNewTodoInput] = useState<string>("");
   const [editTodoInput, setEditTodoInput] = useState<string>("");
